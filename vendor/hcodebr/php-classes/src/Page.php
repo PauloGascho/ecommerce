@@ -8,13 +8,16 @@ class Page {
 
 	private $tpl;
 	private $options = [];
-	private $defauts = [
+	private $defaults = [
+		
+		
 		"data"=>[]
 	];
 
-	public function __construct($opts = array()){
+	public function __construct($opts = array())
+	{
 
-		$this->options = array_merge($defauts, $opts);
+		$this->options = array_merge($this->defaults, $opts);
 
 		$config = array(
 			"tpl_dir"       => $_SERVER["DOCUMENT_ROOT"]."/views/",
@@ -33,12 +36,17 @@ class Page {
 	}
 
 	private function setData($data = array())
+	{
+		foreach ($data as $key => $value) {
+			$this->tpl->assign($key, $value);
+		}
+	}
 
-	public function setTpl($name, $data = array(), $retrunHtml = false)
+	public function setTpl($name, $data = array(), $returnHtml = false)
 	{
 		$this->setData($data);
 
-		return $this->tpl->draw($name, $retrunHtml);
+		return $this->tpl->draw($name, $returnHtml);
 	}
 
 	public function __destruct(){
