@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once("vendor/autoload.php");
 
@@ -12,7 +12,6 @@ $app->config('debug', true);
 $app->get('/', function() {
     
 	$page = new Page();
-
 	$page->setTpl("index");
 
 });
