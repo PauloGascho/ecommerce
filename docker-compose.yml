@@ -3,6 +3,7 @@ version: '2'
 services:
     web:
         image: nginx:latest
+        container_name: ecommerce-server
         environment:
             - TERM=xterm
         volumes:
@@ -16,15 +17,16 @@ services:
             - phpmyadmin
     php:
         image: tuxmate/php:7.1
+        container_name: ecommerce-php
         environment:
             - TERM=xterm
-            - PHINX_BIN_DIR=/www/amigopet/vendor/bin/phinx
         volumes:
             - ./docker/php/www.conf:/etc/php/7.1/fpm/pool.d/www.conf
             - ./docker/php/php.ini:/etc/php/7.1/fpm/php.ini
             - .:/www/ecommerce
     mariadb:
         image: mariadb:10.1.18
+        container_name: ecommerce-database
         environment:
             - TERM=xterm
             - MYSQL_ROOT_PASSWORD=admin
@@ -32,9 +34,10 @@ services:
         volumes:
             - ./dbdata:/var/lib/mysql
         ports:
-            - "3308:3306"
+            - "3306:3306"
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
+        container_name: ecommerce-phpmyadmin
         environment:
             - TERM=xterm
             - MYSQL_ROOT_PASSWORD=admin
