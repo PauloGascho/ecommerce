@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 namespace Hcode\DB;
 
 class Sql {
 
-	const HOSTNAME = "127.0.0.1";
+	const HOSTNAME = "mariadb";
 	const USERNAME = "root";
-	const PASSWORD = "";
+	const PASSWORD = "admin";
 	const DBNAME = "db_ecommerce";
 
 	private $conn;
@@ -15,7 +15,7 @@ class Sql {
 	{
 
 		$this->conn = new \PDO(
-			"mysql:dbname=".Sql::DBNAME.";host=".Sql::HOSTNAME, 
+			"mysql:dbname=".Sql::DBNAME.";host=".Sql::HOSTNAME,
 			Sql::USERNAME,
 			Sql::PASSWORD
 		);
@@ -26,7 +26,7 @@ class Sql {
 	{
 
 		foreach ($parameters as $key => $value) {
-			
+
 			$this->bindParam($statement, $key, $value);
 
 		}

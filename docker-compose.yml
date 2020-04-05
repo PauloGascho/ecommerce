@@ -1,0 +1,43 @@
+version: '2'
+
+services:
+    web:
+        image: nginx:latest
+        environment:
+            - TERM=xterm
+        volumes:
+            - ./docker/nginx/ecommerce.conf:/etc/nginx/conf.d/ecommerce.conf
+            - .:/www/ecommerce
+        ports:
+            - "8080:8081"
+        links:
+            - php
+            - mariadb
+            - phpmyadmin
+    php:
+        image: tuxmate/php:7.1
+        environment:
+            - TERM=xterm
+            - PHINX_BIN_DIR=/www/amigopet/vendor/bin/phinx
+        volumes:
+            - ./docker/php/www.conf:/etc/php/7.1/fpm/pool.d/www.conf
+            - ./docker/php/php.ini:/etc/php/7.1/fpm/php.ini
+            - .:/www/ecommerce
+    mariadb:
+        image: mariadb:10.1.18
+        environment:
+            - TERM=xterm
+            - MYSQL_ROOT_PASSWORD=admin
+            - MYSQL_DATABASE=db_ecommerce
+        volumes:
+            - ./dbdata:/var/lib/mysql
+        ports:
+            - "3308:3306"
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - TERM=xterm
+            - MYSQL_ROOT_PASSWORD=admin
+            - PMA_HOST=mariadb
+        ports:
+            - "9090:80"

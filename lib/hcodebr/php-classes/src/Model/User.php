@@ -15,9 +15,9 @@ class User extends Model{
 			":LOGIN"=>$login
 		));
 
-		if (cont($results) === 0)
+		if (count($results) === 0)
 		{
-			throw new \Exception("Usuário inexistente ou senha inválida.");
+			throw new \Exception("Usuário inexistente.");
 		}
 
 		$data = $results[0];
@@ -29,7 +29,7 @@ class User extends Model{
 			$user->setiduser($data["iduser"]);
 
 		} else {
-			throw new \Exception("Usuário inexistente ou senha inválida.");
+			throw new \Exception("Senha inválida.");
 		}
 	}
 
